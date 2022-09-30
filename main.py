@@ -24,19 +24,26 @@ class Entity:
 class Player(Entity):
     def __init__(self, x, y):
         super().__init__(x, y, ["pixil-frame-0 (1).png"], imgsize=(50, ) * 2, max_xv=5)
-        self.gravity = -9
+        self.gravity = 1
 
-    def handle(self):
+    def handle(self):  # fixme
         if self.xv > self.max_xv:
             self.xv = self.max_xv
         if self.xv < -self.max_xv:
             self.xv = -self.max_xv
-        if self.yv < 10:
+        if self.yv > 10:
             self.yv = 10
         self.y += self.yv
-        if self.y > 1000:
-            self.y = 1000
-        self.yv -= self.gravity
+        if self.y > 400:
+            self.y = 400
+        self.yv += self.gravity
+        # print(self.y)
+        if self.y < 300:
+            print(self.y)
+        if pygame.key.get_pressed()[K_w] or pygame.key.get_pressed()[K_UP]:
+            print("Pressing")
+            self.yv = -20
+            # print(self.y)
         if pygame.key.get_pressed()[K_a] or pygame.key.get_pressed()[K_LEFT]:
             self.x += self.xv
             self.xv -= 0.1
@@ -72,5 +79,5 @@ class Game:
         pygame.quit()
 
 
-g = Game(1000, 1000, "Hi")
+g = Game(1000, 500, "Hi")
 g.game_loop()

@@ -22,7 +22,7 @@ class Entity:
 
 class Player(Entity):
     def __init__(self, x, y):
-        super().__init__(x, y, ["pixil-frame-0 (1).png"], imgsize=(50, 50), max_xv=5)
+        super().__init__(x, y, ["pixil-frame-0 (1).png"], imgsize=(50, ) * 2, max_xv=5)
 
     def handle(self):
         self.xv *= 0.99

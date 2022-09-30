@@ -12,6 +12,7 @@ class Entity:
         self.y = y
         self.xv = 0
         self.yv = 0
+        self.gravity = 0
         self.img_ls = list(map(lambda img: pygame.transform.scale(image.load(img), kwargs.get("imgsize", (1, 1))), \
                                img_ls))
         self.max_xv = kwargs.get("max_xv", 1)
@@ -23,13 +24,19 @@ class Entity:
 class Player(Entity):
     def __init__(self, x, y):
         super().__init__(x, y, ["pixil-frame-0 (1).png"], imgsize=(50, ) * 2, max_xv=5)
+        self.gravity = -9
 
     def handle(self):
-        self.xv *= 0.99
         if self.xv > self.max_xv:
             self.xv = self.max_xv
         if self.xv < -self.max_xv:
             self.xv = -self.max_xv
+        if self.yv < 10:
+            self.yv = 10
+        self.y += self.yv
+        if self.y > 1000:
+            self.y = 1000
+        self.yv -= self.gravity
         if pygame.key.get_pressed()[K_a] or pygame.key.get_pressed()[K_LEFT]:
             self.x += self.xv
             self.xv -= 0.1
